@@ -9,19 +9,43 @@ public class Main {
 
     public static void main(String[] args){
         Scanner kb = new Scanner(System.in);
+        double principal = 0;
+        double i = 0;
+        int period = 0;
 
-        System.out.print("Principal: ");
-        String principalReader = kb.nextLine();
-        double principal = Double.parseDouble(principalReader);
 
-        System.out.print("Interest Rate: ");
-        String interestRateReader = kb.nextLine();
-        double i = Double.parseDouble(interestRateReader);
+        while(true){
+            System.out.print("Principal $1,000.00 - $1,000,000.00: ");
+            String principalReader = kb.nextLine();
+            principal = Double.parseDouble(principalReader);
+            if(principal >= 1_000.00 && principal <= 1_000_000.00) {
+                break;
+            }
+            System.out.println("Enter a number between $1,000.00 and $1,000,000.00");
+        }
 
-        System.out.print("Period: ");
-        String periodReader = kb.nextLine();
-        int period = Integer.parseInt(periodReader);
 
+
+        while(true){
+            System.out.print("Interest Rate: ");
+            String interestRateReader = kb.nextLine();
+            i = Double.parseDouble(interestRateReader);
+            if(i > 0 && i <= 30){
+                break;
+            }
+            System.out.println("Enter a value that is greater than 0 and less than 30.");
+
+        }
+
+        while(true){
+            System.out.print("Period: ");
+            String periodReader = kb.nextLine();
+            period = Integer.parseInt(periodReader);
+            if(period > 0 && period <= 30){
+                break;
+            }
+            System.out.println("Enter a value between 1 and 30.");
+        }
         System.out.println("Mortgage: " + mortgageCalculation(principal(principal), interestRate(i), period(period)));
     }
 
