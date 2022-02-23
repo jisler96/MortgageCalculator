@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Main {
     static final double PERCENT = 100.00;
     static final byte MONTHS = 12;
+
     public static void main(String[] args){
 
         double principal = readInput("Principal: ", 999, 1_000_000);
@@ -34,26 +35,22 @@ public class Main {
     }
 
     public static double principal(double principal){
-        double p = principal;
-        return p;
+        return principal;
     }
 
     public static double interestRate(double interestRate){
          interestRate = (interestRate/PERCENT);
-        double r = interestRate/MONTHS;
-        return r;
+        return interestRate/MONTHS;
     }
 
     public static int period(int period){
-        int periodInMonths = period * MONTHS;
-        return periodInMonths;
+        return period * MONTHS;
     }
 
     public static double mortgageCalculation(double p, double r, int n){
         double onePlusInterestRate = 1 + r;
         double raisedToThePeriod = Math.pow(onePlusInterestRate,n);
-        double mortgage = p * ((r * (raisedToThePeriod))/((raisedToThePeriod) - 1));
-        return mortgage;
+        return p * ((r * (raisedToThePeriod))/((raisedToThePeriod) - 1));
     }
 
     /* *********************************************
@@ -66,8 +63,7 @@ public class Main {
     *               n = number of payments
     *               p = number of payments we have made */
     public static double balance(double p, double r, int n, short paymentsMade){
-        double balance = p * (Math.pow(1 + r, n) - Math.pow(1 + r, paymentsMade)) / (Math.pow(1 + r, n) - 1);
-        return balance;
+        return p * (Math.pow(1 + r, n) - Math.pow(1 + r, paymentsMade)) / (Math.pow(1 + r, n) - 1);
     }
 
     public static double readInput(String prompt, double min, double max){
