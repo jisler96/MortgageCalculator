@@ -1,52 +1,29 @@
 package com.isler;
 
 import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
     static final double PERCENT = 100.00;
     static final byte MONTHS = 12;
-
     public static void main(String[] args){
-        Scanner kb = new Scanner(System.in);
-        double principal = 0;
-        double i = 0;
-        int period = 0;
 
+        double principal = readInput("Principal: ", 999, 1_000_000);
+        double i = readInput("Interest Rate: ", 0, 30);
+        int period = (int) readInput("Period: ", 0, 30);
+        double mortgage = mortgageCalculation(principal(principal), interestRate(i), period(period));
 
-        while(true){
-            System.out.print("Principal $1,000.00 - $1,000,000.00: ");
-            String principalReader = kb.nextLine();
-            principal = Double.parseDouble(principalReader);
-            if(principal >= 1_000.00 && principal <= 1_000_000.00) {
-                break;
-            }
-            System.out.println("Enter a number between $1,000.00 and $1,000,000.00");
+        NumberFormat currency = NumberFormat.getCurrencyInstance();
+        System.out.println("--------------");
+        System.out.println("Monthly Mortgage: " + currency.format(mortgage));
+        System.out.println();
+        System.out.println("Payment Schedule: ");
+        System.out.println("--------------");
+        for(short month = 1; month <= period * MONTHS; month++){
+            double balance = balance(principal(principal), interestRate(i), period(period), month);
+            System.out.println(NumberFormat.getCurrencyInstance().format(balance));
         }
-
-
-
-        while(true){
-            System.out.print("Interest Rate: ");
-            String interestRateReader = kb.nextLine();
-            i = Double.parseDouble(interestRateReader);
-            if(i > 0 && i <= 30){
-                break;
-            }
-            System.out.println("Enter a value that is greater than 0 and less than 30.");
-
-        }
-
-        while(true){
-            System.out.print("Period: ");
-            String periodReader = kb.nextLine();
-            period = Integer.parseInt(periodReader);
-            if(period > 0 && period <= 30){
-                break;
-            }
-            System.out.println("Enter a value between 1 and 30.");
-        }
-        System.out.println("Mortgage: " + mortgageCalculation(principal(principal), interestRate(i), period(period)));
     }
 
     public static double principal(double principal){
@@ -65,12 +42,41 @@ public class Main {
         return periodInMonths;
     }
 
-    public static String mortgageCalculation(double p, double r, int n){
+    public static double mortgageCalculation(double p, double r, int n){
         double onePlusInterestRate = 1 + r;
         double raisedToThePeriod = Math.pow(onePlusInterestRate,n);
         double mortgage = p * ((r * (raisedToThePeriod))/((raisedToThePeriod) - 1));
-        NumberFormat currency = NumberFormat.getCurrencyInstance();
-        return currency.format(mortgage);
+        return mortgage;
+    }
+
+    /* *********************************************
+    *   This is not yet complete. I have it printing each value statement. Just need to play with formula.
+    * www.mtgprofessor.com/formulas.htm
+    *               B = L[c(1+c)^n - (1+c)^p]/[(1+c)^n -1]
+    *               B = Balance
+    *               L = Loan amount or principal
+    *               c = monthly interest
+    *               n = number of payments
+    *               p = number of payments we have made */
+    public static double balance(double p, double r, int n, short paymentsMade){
+        double balance = p * (Math.pow(1 + r, n) - Math.pow(1 + r, paymentsMade)) / (Math.pow(1 + r, n) - 1);
+
+        return balance;
+    }
+
+    public static double readInput(String prompt, double min, double max){
+        Scanner kb = new Scanner(System.in);
+        double value;
+        while(true) {
+            System.out.print(prompt);
+            String string = kb.nextLine();
+            value = Double.parseDouble(string);
+            if(value > min && value <= max){
+                break;
+            }
+            System.out.println("Enter a number between " + min + " and " + max);
+        }
+        return value;
     }
 
 
