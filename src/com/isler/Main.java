@@ -13,10 +13,17 @@ public class Main {
         double i = readInput("Interest Rate: ", 0, 30);
         int period = (int) readInput("Period: ", 0, 30);
         double mortgage = mortgageCalculation(principal(principal), interestRate(i), period(period));
+        printMortgage(mortgage);
+        printPaymentSchedule(principal, i, period);
+    }
 
+    private static void printMortgage(double mortgage) {
         NumberFormat currency = NumberFormat.getCurrencyInstance();
         System.out.println("--------------");
-        System.out.println("Monthly Mortgage: " + currency.format(mortgage));
+        System.out.println("Monthly Mortgage Payment: " + currency.format(mortgage));
+    }
+
+    private static void printPaymentSchedule(double principal, double i, int period) {
         System.out.println();
         System.out.println("Payment Schedule: ");
         System.out.println("--------------");
@@ -60,7 +67,6 @@ public class Main {
     *               p = number of payments we have made */
     public static double balance(double p, double r, int n, short paymentsMade){
         double balance = p * (Math.pow(1 + r, n) - Math.pow(1 + r, paymentsMade)) / (Math.pow(1 + r, n) - 1);
-
         return balance;
     }
 
