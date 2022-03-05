@@ -9,8 +9,7 @@ public class Main {
         var calculator = new MortgageCalculator(principal, i, period);
         var mortgageReport = new MortgageReport(calculator);
 
-        System.out.println(calculator.mortgageCalculation());
-        mortgageReport.printMonthlyMortgage(calculator.mortgageCalculation());
+        mortgageReport.printMonthlyMortgage();
         mortgageReport.printPaymentSchedule();
    }
 }

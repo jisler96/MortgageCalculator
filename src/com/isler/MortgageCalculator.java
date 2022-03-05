@@ -26,9 +26,11 @@ public class MortgageCalculator {
 
 
     public double mortgageCalculation(){
-        double onePlusInterestRate = 1 + interestRate;
-        double raisedToThePeriod = Math.pow(onePlusInterestRate,period);
-        return principal * ((interestRate * (raisedToThePeriod))/((raisedToThePeriod) - 1));
+        double monthlyInterest = getMonthlyInterest();
+        int numberOfPayments = period * MONTHS;
+        double mortgage = principal * (monthlyInterest * Math.pow(1 + monthlyInterest, numberOfPayments)) / (Math.pow(1 + monthlyInterest, numberOfPayments) - 1);
+        return mortgage;
+
     }
 
     public double balance(short paymentsMade){

@@ -12,7 +12,8 @@ public class MortgageReport {
         currency = NumberFormat.getCurrencyInstance();
     }
 
-    public void printMonthlyMortgage(double mortgage) {
+    public void printMonthlyMortgage() {
+        double mortgage = calculator.mortgageCalculation();
         System.out.println();
         System.out.println("Monthly Mortgage Payment: " + currency.format(mortgage));
         System.out.println("--------------");
